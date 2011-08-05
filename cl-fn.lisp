@@ -29,7 +29,8 @@
 (in-package :cl-fn.alias)
 
 (defmacro defalias (name function-designator)
-  (with-gensyms (function designator)
+  (let ((function (gensym))
+        (designator (gensym)))
     `(let* ((,designator ,function-designator)
             (,function (if (functionp ,designator)
                            ,designator
