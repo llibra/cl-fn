@@ -98,6 +98,26 @@
               `(progn ,form (sequentially-apply ,next ,@body)))))
       form))
 
+(defmacro -> (x &rest rest)
+  (if rest
+      (destructuring-bind (first . rest) rest
+        (if rest
+            `(-> (-> ,x ,first) ,@rest)
+            (if (consp first)
+                `(,(car first) ,x ,@(cdr first))
+                `(,first ,x))))
+      x))
+
+(defmacro ->> (x &rest rest)
+  (if rest
+      (destructuring-bind (first . rest) rest
+        (if rest
+            `(->> (->> ,x ,first) ,@rest)
+            (if (consp first)
+                `(,(car first) ,@(cdr first) ,x)
+                `(,first ,x))))
+      x))
+
 (in-package :cl-fn.flip)
 
 (defun flip (fn x y)

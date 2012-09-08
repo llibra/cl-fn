@@ -19,3 +19,23 @@
   (5am:is (equal '(0 1)
                  (sequentially-apply (values 0 1)
                    (list _ _)))))
+
+(5am:test sapply/->
+  (5am:is (eq t (-> t)))
+  (5am:is (= 0 (-> 0)))
+  (5am:is (eq t (-> (values t))))
+  (5am:is (eq t (-> t (identity))))
+  (5am:is (= 0 (-> 0 (identity))))
+  (5am:is (= 2 (-> 0 (1+) (1+))))
+  (5am:is (= -8 (-> 1 (- 5) (* 2))))
+  (5am:is (= 2 (-> '(1 2 3) (elt 1)))))
+
+(5am:test sapply/->>
+  (5am:is (eq t (->> t)))
+  (5am:is (= 0 (->> 0)))
+  (5am:is (eq t (->> (values t))))
+  (5am:is (eq t (->> t (identity))))
+  (5am:is (= 0 (->> 0 (identity))))
+  (5am:is (= 2 (->> 0 (1+) (1+))))
+  (5am:is (= 8 (->> 1 (- 5) (* 2))))
+  (5am:is (= 6 (->> '(1 2 3) (reduce #'+)))))
