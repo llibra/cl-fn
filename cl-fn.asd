@@ -2,7 +2,7 @@
 (in-package :cl-fn.asd)
 
 (defsystem :cl-fn
-  :version "0.1"
+  :version "0.2"
   :author "Manabu Takayama <learn.libra@gmail.com>"
   :licence "MIT License"
   :serial t
