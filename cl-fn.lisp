@@ -71,6 +71,33 @@
   #'(lambda (&rest args2)
       (apply fn (append args2 args))))
 
+(in-package :cl-fn.sapply)
+
+(defun _->gensym (form)
+  (labels ((_p (x) (and (symbolp x) (string= x "_")))
+           (rec (expr syms)
+             (if (consp expr)
+                 (destructuring-bind (x . xs) expr
+                   (multiple-value-bind (x syms) (rec x syms)
+                     (multiple-value-bind (xs syms) (rec xs syms)
+                       (values (cons x xs) syms))))
+                 (if (_p expr)
+                     (let ((s (gensym)))
+                       (values s (cons s syms)))
+                     (values expr syms)))))
+    (multiple-value-bind (form syms) (rec form nil)
+      (values form (nreverse syms)))))
+
+(defmacro sequentially-apply (form &body body)
+  (if body
+      (destructuring-bind (next . body) body
+        (multiple-value-bind (next syms) (_->gensym next)
+          (if syms
+              `(multiple-value-bind ,syms ,form
+                 (sequentially-apply ,next ,@body))
+              `(progn ,form (sequentially-apply ,next ,@body)))))
+      form))
+
 (in-package :cl-fn.flip)
 
 (defun flip (fn x y)

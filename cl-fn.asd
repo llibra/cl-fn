@@ -8,3 +8,15 @@
   :serial t
   :components ((:file "packages")
                (:file "cl-fn")))
+
+(defsystem :cl-fn-test
+  :depends-on (:cl-fn :fiveam)
+  :components ((:module "t"
+                        :serial t
+                        :components ((:file "packages")
+                                     (:file "suites")
+                                     (:file "sapply")))))
+
+(defmethod perform ((o test-op) (c (eql (find-system :cl-fn))))
+  (asdf:load-system :cl-fn-test)
+  (funcall (intern "RUN!" :5am) (intern "ALL" :cl-fn.test)))
