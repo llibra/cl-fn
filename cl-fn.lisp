@@ -98,6 +98,9 @@
               `(progn ,form (sequentially-apply ,next ,@body)))))
       form))
 
+(defmacro chain (form &rest forms)
+  `(sequentially-apply ,form ,@forms))
+
 (defmacro -> (x &rest rest)
   (if rest
       (destructuring-bind (first . rest) rest

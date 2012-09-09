@@ -18,7 +18,7 @@
 
 (defpackage :cl-fn.sapply
   (:use :cl)
-  (:export :sequentially-apply :-> :->>))
+  (:export :sequentially-apply :chain :-> :->>))
 
 (defpackage :cl-fn.flip
   (:use :cl)
@@ -28,4 +28,4 @@
   (:use :cl :cl-fn.fn :cl-fn.alias :cl-fn.comp :cl-fn.pa :cl-fn.sapply
         :cl-fn.flip)
   (:export :fn :defalias :compose :conjoin :disjoin :curry :rcurry
-           :sequentially-apply :-> :->> :flip))
+           :sequentially-apply :chain :-> :->> :flip))
