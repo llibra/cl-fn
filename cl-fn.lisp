@@ -125,3 +125,11 @@
 
 (defun flip (fn x y)
   (funcall fn y x))
+
+(in-package :cl-fn.named-let)
+
+(defmacro named-let (name bindings &body body)
+  (flet ((var (x) (if (consp x) (car x) x))
+         (val (x) (if (consp x) (cadr x) nil)))
+    `(labels ((,name ,(mapcar #'var bindings) ,@body))
+       (,name ,@(mapcar #'val bindings)))))

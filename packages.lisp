@@ -24,8 +24,12 @@
   (:use :cl)
   (:export :flip))
 
+(defpackage :cl-fn.named-let
+  (:use :cl)
+  (:export :named-let))
+
 (defpackage :cl-fn
   (:use :cl :cl-fn.fn :cl-fn.alias :cl-fn.comp :cl-fn.pa :cl-fn.sapply
-        :cl-fn.flip)
+        :cl-fn.flip :cl-fn.named-let)
   (:export :fn :defalias :compose :conjoin :disjoin :curry :rcurry
-           :sequentially-apply :chain :-> :->> :flip))
+           :sequentially-apply :chain :-> :->> :flip :named-let))
